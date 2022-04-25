@@ -67,4 +67,4 @@ then to clean up volumes (Getting rid of the volumes will lose data. eg local da
 ## Creating Models
 To gather real data, we need to create a `Model` class with a `Constructor` which instantiates a new instance of the `Database` PDO object (created in the libraries dir).
 
-From within that Model class, we can create methods which interact with the `Database` object and return data for our `Controllers` to receive and send to the `Views`. See the Home.php `Model` and Pages.php `Controller` and index.php `View` for an example.
+From within that `Model` class, we can create methods which interact with the `Database` object and return data for our `Controllers` to receive and send to a `View`. See the Home.php `Model`, Pages.php `Controller` and index.php `View` for a working example.
