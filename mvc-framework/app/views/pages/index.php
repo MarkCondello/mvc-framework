@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 <h1><?= $data['title']; ?></h1>
-<h2><?= $data['description']; ?></h2>
+ <small><a href="<?= $data['link'] ?>" target="_blank"><?= $data['description']; ?></a></small>
 <?php
   if (count($data['users'])): ?>
   <hr>

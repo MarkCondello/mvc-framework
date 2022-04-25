@@ -3,15 +3,15 @@ class Pages extends Controller{
     public function __construct(){
         $this->homeModel = $this->model('Home'); // demo Model for gathering data
     }
-    //this must be included with all controller classes as it is a default method set in Core.php as currentMethod
+    //index method this must be included with all controller classes as it is a default method set in Core.php as currentMethod
     public function index(){
         $data = [
             "title"=> "PHP MVC",
-            "description" => "A framework built from following the Object Oriented PHP & MVC",
-            "link" => "https://github.com/ncofre98/traversymvc/blob/master/public/index.php",
+            "description" => "A framework built from following the raversy Object Oriented PHP & MVC course.",
+            "link" => "https://www.udemy.com/course/object-oriented-php-mvc/",
             "users" => $this->homeModel->getUsers(),
         ];
-        $this->view("pages/index", $data); //call view method from Controller class
+        $this->view("pages/index", $data);
     }
     //this is called from call_user_func_array
     //if there are no params, the about method will run
