@@ -63,3 +63,8 @@ then to clean up images
 then to clean up volumes (Getting rid of the volumes will lose data. eg local databases. Elastic Search indexes If you need that backup first.)
 
 `docker volume prune`
+
+## Creating Models
+To gather data from the Database, we need to create a Model class with a Constructor which instantiates a new instance of the `Database` PDO object.
+From with in that Model class we can create methods which interact with the `Database` object and returns data for our `Controllers` to receive. See the Home.php Model and Pages.php controller for an example.
+

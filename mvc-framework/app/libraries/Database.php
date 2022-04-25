@@ -12,11 +12,11 @@ class Database {
     {
         //https://phpdelusions.net/pdo_examples/connect_to_mysql
         $dsn = 'mysql:host='. $this->host . ';dbname=' . $this->dbname;
-        //set PDO options
-        $options = array(
+        $options = [
             //PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        );
+        ];
         try {
             $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
         } catch(PDOException $e) {
@@ -58,13 +58,13 @@ class Database {
     public function resultset()
     {
         $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+        return $this->stmt->fetchAll();
     }
     //get single record as obj
     public function single()
     {
         $this->execute();
-        return $this->stmt->fetch(PDO::FETCH_OBJ);
+        return $this->stmt->fetch();
     }
     //get row count
     public function rowCount()
