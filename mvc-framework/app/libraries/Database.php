@@ -69,6 +69,8 @@ class Database {
     //get row count
     public function rowCount()
     {
+        // die(var_dump($this->stmt));
+
         $this->execute();
         return $this->stmt->rowCount();
     }

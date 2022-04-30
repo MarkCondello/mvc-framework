@@ -1,14 +1,8 @@
-<?php 
-class Home {
-  private $db;
-
-  public function __construct()
+<?php
+class Home extends Model {
+  public function getPosts()
   {
-    $this->db = new Database;
-  }
-  public function getUsers()  // demo method for gathering data
-  {
-    $this->db->query("SELECT * FROM users");
+    $this->db->query("SELECT * FROM posts");
     return $this->db->resultSet();
   }
- }
+}

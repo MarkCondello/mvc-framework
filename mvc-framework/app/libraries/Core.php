@@ -12,8 +12,8 @@ class Core {
 
     public function __construct()
     {
-        // print_r($this->getUrl());
         $url = $this->getUrl();
+        // var_dump(ucwords($url[0]));
         //look in controllers for first index value from the index.php file
         if(file_exists('../app/controllers/' . ucwords($url[0]) . '.php')):
             //if the controller file exits set it as this->currentController
