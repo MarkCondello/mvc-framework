@@ -2,16 +2,16 @@
 class Register extends Controller {
   public function __construct()
   {
-    $this->userModel = $this->model('User'); // demo Model for gathering data
+    $this->userModel = $this->model('User');
   }
-  public function index($params = null)
+  public function index()
   {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
       $user = (object)[
         'name' => $_POST['name'],
         'email' => $_POST['email'],
-        'password' => $_POST['password'],
+        'password' => $_POST['password'], // ToDO: need to hash the password
         'confirm_password' => $_POST['confirm_password'],
       ];
       $data = [
@@ -28,7 +28,6 @@ class Register extends Controller {
       if($existingUser) {
         $data['email_error'] = 'That email address is already used.';
       }
-
       if (! $user->confirm_password) {
         $data['confirm_password_error'] = 'The confirm password field is required.';
       }
@@ -39,15 +38,15 @@ class Register extends Controller {
       && empty($data['email_error'])
       && empty($data['password_error'])
       && empty($data['confirm_password_error'])) {
-      
-        $result = $this->userModel->saveUser($user);
-        if($result) {
-          // Show flash message and redirect to the post page which is a protected area
+        $savedUser = $this->userModel->saveUser($user);
+        if($savedUser) {
+          // Add flash message to session and redirect to the login page
+          header('Location: ' . URLROOT . '/login');
         } else {
-          // Show error flash message
+          // ToDo: Add error flash message to session
+          // $message => 'There was an error saving you details.',
         }
       }
-
     } else {
       $data = [
         "title"=> "Register",
@@ -62,12 +61,5 @@ class Register extends Controller {
       ];
     }
     $this->view("pages/register", $data);
-      // echo " with the about action. Params passed are: " . $params;
   }
-
-    // public function login(){
-
-    //      $data = [
-    //     ];
-    // }
 }

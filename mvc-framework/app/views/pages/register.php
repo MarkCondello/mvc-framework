@@ -13,7 +13,6 @@
           placeholder="Text input"
           value="<?= $data['name'] ?>"
         >
-        <!-- is-success -->
         <span class="icon is-small is-left">
           <i class="fas fa-user"></i>
         </span>
@@ -22,15 +21,11 @@
           <i class="fas fa-exclamation-triangle"></i>
         </span>
         <?php endif; ?>
-           <!-- <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span> -->
       </div>
       <?php if($data['name_error']): ?>
       <p class="help is-danger"><?= $data['name_error'] ?></p>
       <?php endif; ?>
     </div>
-
     <div class="field">
       <label class="label">Email</label>
       <div class="control has-icons-left has-icons-right">
@@ -54,17 +49,16 @@
       <p class="help is-danger"><?= $data['email_error'] ?></p>
       <?php endif ?>
     </div>
-
     <div class="field">
       <label class="label">Password</label>
       <div class="control has-icons-left has-icons-right">
-      <input
+        <input
           class="input <?= $data['password_error'] ? 'is-danger' : null ?>"
           type="password"
           name="password"
           placeholder="Password"
           value="<?= $data['password'] ?>"
-        >        <!-- is-danger -->
+        >
         <span class="icon is-small is-left">
           <i class="fas fa-key"></i>
         </span>
@@ -78,7 +72,6 @@
       <p class="help is-danger"><?= $data['password_error'] ?></p>
       <?php endif ?>
     </div>
-
     <div class="field">
       <label class="label">Confirm Password</label>
       <div class="control has-icons-left has-icons-right">
@@ -88,7 +81,7 @@
           name="confirm_password"
           placeholder="Confirm password"
           value="<?= $data['confirm_password'] ?>"
-        >        <!-- is-danger -->
+        >
         <span class="icon is-small is-left">
           <i class="fas fa-key"></i>
         </span>
@@ -102,7 +95,6 @@
       <p class="help is-danger"><?= $data['confirm_password_error'] ?></p>
       <?php endif ?>
     </div>
-
     <div class="field is-grouped">
       <div class="control">
         <input type="submit" class="button is-link" value="Register">
@@ -113,5 +105,4 @@
     </div>
   </form>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php';?>

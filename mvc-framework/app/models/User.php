@@ -15,6 +15,13 @@ class User extends Model{
     $this->db->bind('email', $email);
     return $this->db->single();
   }
+  public function getUserByEmailAndPassword($email, $password)
+  {
+    $this->db->query('SELECT * FROM users WHERE email = :email AND password = :password');
+    $this->db->bind('email', $email);
+    $this->db->bind('password', $password);
+    return $this->db->single();
+  }
 
   public function getUsers()
   {
