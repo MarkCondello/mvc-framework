@@ -28,4 +28,11 @@ class User extends Model{
     $this->db->query("SELECT * FROM users");
     return $this->db->resultSet();
   }
+
+  public function getUsersPosts($userId)
+  {
+    $this->db->query('SELECT * FROM posts WHERE user_id = :userId');
+    $this->db->bind('userId', $userId);
+    return $this->db->resultSet();
+  }
 }

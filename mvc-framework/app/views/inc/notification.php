@@ -2,7 +2,7 @@
 is-danger
 -->
 <div class="notification
- <?= $notification->class ?>">
+ <?= $data['flashMessageClass'] ?>">
   <button class="delete"></button>
-  <?= $notification->message ?>
+  <?= $data['flashMessage'] ?>
 </div>

@@ -40,16 +40,22 @@
         </div>
       </div> -->
     </div>
-
+<?php // var_dump($_SESSION['authed_user']) ?>
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
+          <?php if (!$_SESSION['authed_user']): ?>
           <a class="button is-primary" href="<?= URLROOT . '/register' ?>">
             <strong>Register</strong>
           </a>
-          <a class="button is-light">
+          <a class="button is-light" href="<?= URLROOT . '/login' ?>">
             Log in
           </a>
+          <?php else: ?>
+            <a class="button is-light" href="<?= URLROOT . '/logout' ?>">
+            Log out
+          </a>
+          <?php endif ?>
         </div>
       </div>
     </div>

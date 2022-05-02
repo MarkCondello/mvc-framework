@@ -16,6 +16,7 @@ services:
     volumes: ['./mvc-framework:/var/www/html']
   db:
     container_name: mysql-db
+    platform: linux/x86_64
     image: mysql
     restart: always
     volumes:
