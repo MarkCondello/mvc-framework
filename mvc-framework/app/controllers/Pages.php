@@ -8,7 +8,7 @@ class Pages extends Controller {
     public function index(){
         $data = [
             "title"=> "PHP MVC",
-            "description" => "A framework built from following the raversy Object Oriented PHP & MVC course.",
+            "description" => "A framework built from following the Traversy Object Oriented PHP & MVC course.",
             "link" => "https://www.udemy.com/course/object-oriented-php-mvc/",
             "users" => $this->userModel->getUsers(),
             "posts" => $this->homeModel->getPosts(),

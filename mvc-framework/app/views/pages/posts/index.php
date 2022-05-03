@@ -1,13 +1,8 @@
-<?php require APPROOT . '/views/inc/header.php';?>
-
-<?php 
-if (isset($data['flashMessage']) && isset($data['flashMessageClass'])) {
+<?php require APPROOT . '/views/inc/header.php'; 
 include APPROOT . '/views/inc/notification.php';
-}
-?>
-<?php include APPROOT . '/views/inc/nav.php'; ?>
+include APPROOT . '/views/inc/nav.php'; ?>
 <div class="container">
-  <h1><?= $data['title']; ?></h1>
+  <h1><?= $data['page_title']; ?></h1>
   <?php
   if (isset($data['usersPosts'])): ?>
   <hr>
@@ -19,7 +14,6 @@ include APPROOT . '/views/inc/notification.php';
     </ul>
     <? else: ?>
       <a href="<?= URLROOT ?>/posts/create" class="button is-link">Create A Post</a>
-      <? endif;?>
+    <? endif;?>
 </div>
-
 <?php require APPROOT . '/views/inc/footer.php';?>

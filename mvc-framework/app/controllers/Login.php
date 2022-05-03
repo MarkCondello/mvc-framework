@@ -13,7 +13,7 @@ class Login extends Controller {
         'password' => $_POST['password'],
       ];
       $data = [
-        "title"=> "Login",
+        "page_title"=> "Login",
         'email' => $user->email ?? '',
         'email_error' => $user->email ? '' : 'The email field is required.',
         'password' => $user->password ?? '',

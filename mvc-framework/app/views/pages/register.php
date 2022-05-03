@@ -1,7 +1,7 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 <?php include APPROOT . '/views/inc/nav.php'; ?>
 <div class="container" style="min-height: 100vh;">
-  <h1 class="is-size-1"><?= $data['title']; ?></h1>
+  <h1 class="is-size-1"><?= $data['page_title']; ?></h1>
    <form method="POST" action="<?= URLROOT ?>/register">
     <div class="field">
       <label class="label">Username</label>

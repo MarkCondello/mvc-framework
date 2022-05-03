@@ -2,6 +2,7 @@
 class Posts extends Controller {
   public function __construct()
   {
+    // Can I put the session_start(); here for all methods and do user verification here as well?
     $this->userModel = $this->model('User');
     $this->postModel = $this->model('User');
   }
@@ -20,10 +21,10 @@ class Posts extends Controller {
 
       $usersPosts = $this->userModel->getUsersPosts($user->id);
       if (count($usersPosts) < 1) {
-        $data['title'] = 'You have no posts '  . $user->name;
+        $data['page_title'] = 'You have no posts '  . $user->name;
       } else {
         $data = [
-          'title' => 'Here are your posts ' . $user->name,
+          'page_title' => 'Here are your posts ' . $user->name,
           'usersPosts' => $usersPosts,
         ];
       }
@@ -35,6 +36,25 @@ class Posts extends Controller {
   }
   public function create()
   {
+    session_start();
+    $user = $this->userModel->getUserByEmail($_SESSION['authed_user']);
+    $data = [
+      'page_title' => "Create a new post",
+      'user' => $user,
+    ];
+    $this->view("pages/posts/create", $data);
+  }
+  public function store()
+  {
+    // Process the form
+    session_start();
+    $data = [];
+    header('Location: ' . URLROOT . '/pages/posts/index');
+  }
+  //  ToDo Ron
+  public function update($params)
+  {
+    session_start();
     $data = [];
     $this->view("pages/posts/create", $data);
   }
