@@ -28,7 +28,7 @@ class Register extends Controller {
       if($existingUser) {
         $data['email_error'] = 'That email address is already used.';
       }
-      if (! $user->confirm_password) {
+      if (!$user->confirm_password) {
         $data['confirm_password_error'] = 'The confirm password field is required.';
       }
       if ($user->confirm_password !== $user->password) {

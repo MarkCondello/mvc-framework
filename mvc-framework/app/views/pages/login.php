@@ -1,6 +1,5 @@
-<?php require APPROOT . '/views/inc/header.php';?>
-<?php include APPROOT . '/views/inc/nav.php'; ?>
-<div class="container" style="min-height: 100vh;">
+<?php require APPROOT . '/views/inc/header.php'; ?>
+<div class="container mt-6" style="min-height: 100vh;">
   <h1 class="is-size-1"><?= $data['page_title']; ?></h1>
    <form method="POST" action="<?= URLROOT ?>/login">
     <div class="field">

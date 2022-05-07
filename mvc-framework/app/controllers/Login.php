@@ -1,7 +1,10 @@
 <?php
+include APPROOT . '/utils/helpers.php';
+
 class Login extends Controller {
   public function __construct()
   {
+    session_start();
     $this->userModel = $this->model('User');
   }
   public function index()
@@ -24,27 +27,31 @@ class Login extends Controller {
         if ($verifiedUsersEmail) {
           $verifiedUsersEmailAndPassword = $this->userModel->getUserByEmailAndPassword($user->email, $user->password);
           if($verifiedUsersEmailAndPassword) {
-            session_start();
             $_SESSION['authed_user'] = $verifiedUsersEmail->email;
             $_SESSION['flash_message_class'] = 'is-primary';
             $_SESSION['flash_message'] = 'You successfully logged in.';
-            // Add flash message to session and redirect to the your post page which is a protected area
             header('Location: ' . URLROOT . '/posts');
           } else {
-            $data['password_error'] = 'The password for the email you provided is not correct.';
+            $data['password_error'] = 'The password entered is invalid.';
           }
         } else {
           $data['email_error'] = 'The email you provided is not registered in our system.';
         }
       }
     } else {
-      $data = [
+      $data = [];
+      $flashMessage = getFlashMessage();
+      if ($flashMessage) {
+        $data = array_merge($data, $flashMessage);
+      }
+      $fieldData = [
         "title"=> "Login",
         'email' => '',
         'email_error' => '',
         'password' => '',
         'password_error' => '',
       ];
+      $data = array_merge($fieldData, $data);
     }
     $this->view("pages/login", $data);
   }

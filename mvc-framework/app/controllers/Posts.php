@@ -1,24 +1,22 @@
 <?php
+include APPROOT . '/utils/helpers.php';
+
 class Posts extends Controller {
   public function __construct()
-  {
-    // Can I put the session_start(); here for all methods and do user verification here as well?
+  {    
+    session_start();
     $this->userModel = $this->model('User');
-    $this->postModel = $this->model('User');
+    $this->postModel = $this->model('Post');
   }
   public function index()
-  {
-    session_start();
+  {      
     $user = $this->userModel->getUserByEmail($_SESSION['authed_user']);
     if ($user) {
-      // This should be added to a helper function
-      if(isset($_SESSION['flash_message']) && isset($_SESSION['flash_message'])) {
-        $data['flashMessageClass'] = $_SESSION['flash_message_class'];
-        $data['flashMessage'] = $_SESSION['flash_message'];
-        unset($_SESSION['flash_message']);
-        unset($_SESSION['flash_message_class']);
+      $data = [];
+      $flashMessageData = getFlashMessage();
+      if ($flashMessageData) {
+        $data = array_merge($data, $flashMessageData);
       }
-
       $usersPosts = $this->userModel->getUsersPosts($user->id);
       if (count($usersPosts) < 1) {
         $data['page_title'] = 'You have no posts '  . $user->name;
@@ -30,13 +28,12 @@ class Posts extends Controller {
       }
       $this->view("pages/posts/index", $data);
     } else {
-      // Add flash message to session and redirect to the your post page which is a protected area
-      header('Location: ' . URLROOT . '/login');
+      setFlashMessage('User could not be verified...', 'is-danger');
+      logoutUser();
     }
   }
   public function create()
   {
-    session_start();
     $user = $this->userModel->getUserByEmail($_SESSION['authed_user']);
     $data = [
       'page_title' => "Create a new post",
@@ -46,15 +43,37 @@ class Posts extends Controller {
   }
   public function store()
   {
-    // Process the form
-    session_start();
-    $data = [];
-    header('Location: ' . URLROOT . '/pages/posts/index');
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $post = (object)[
+      'user_id' => $_POST['user_id'],
+      'title' => $_POST['title'],
+      'body' => $_POST['body'],
+    ];
+    $data = [
+      'title' => $post->title ?? '',
+      'title_error' => $post->title ? '' : 'The title field is required.',
+      'body' => $post->body ?? '',
+      'body_error' => $post->body ? '' : 'The body field is required.',
+    ];
+    if (empty($data['title_error']) && empty($data['body_error'])) {
+      //do a second check for string lengths
+      $savedPost = $this->postModel->savePost($post);
+      if($savedPost) {
+        // Set success flashMessage
+        setFlashMessage($post->title . ' was created succesfully', 'is-success');
+        header('Location: ' . URLROOT . '/posts');
+      } else {
+        // ToDo: Add error flash message to session
+        // $message => 'There was an error saving you details.',
+      }
+    } else {
+      // ToDo: Need to check how to pass data back to a Controller route ie sned error messages to create in this class
+    }
+   
   }
   //  ToDo Ron
   public function update($params)
   {
-    session_start();
     $data = [];
     $this->view("pages/posts/create", $data);
   }

@@ -1,15 +1,14 @@
 <?php require APPROOT . '/views/inc/header.php';?>
-<?php include APPROOT . '/views/inc/nav.php'; ?>
-<div class="container" style="min-height: 100vh;">
-
-  <?= 
-  var_dump($data['user']);
+<div class="container mt-6" style="min-height: 100vh;">
+<?php
+  // var_dump($data['user']);
 ?>  
   <h1 class="is-size-1">
     <?= $data['page_title'] ?>
   </h1>
    <form method="POST" action="<?= URLROOT ?>/posts/store">
    <!-- I think fields should be included as a partial or helper function -->
+    <input type="number" value="<?= $data['user']->id?>" name="user_id" />
     <div class="field">
       <label class="label">Title</label>
       <div class="control has-icons-left has-icons-right">
@@ -33,7 +32,6 @@
       <p class="help is-danger"><?= $data['title_error'] ?></p>
       <?php endif ?>
     </div>
-
     <div class="field">
       <label class="label">Content</label>
       <div class="control has-icons-left has-icons-right">
@@ -41,7 +39,7 @@
           style="width:100%;"
           class="textarea <?= $data['body_error'] ? 'is-danger' : null ?>"
           name="body"
-          rows="10"
+          rows="5"
          >
          <?= $data['body'] ?>
         </textarea>

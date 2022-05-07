@@ -1,6 +1,5 @@
 <?php require APPROOT.'/views/inc/header.php';?>
-<?php include(APPROOT.'/views/inc/nav.php'); ?>
-<div class="container">
+<div class="container mt-6">
   <h1><?= $data['title']; ?></h1>
   <small><a href="<?= $data['link'] ?>" target="_blank"><?= $data['description']; ?></a></small>
   <?php

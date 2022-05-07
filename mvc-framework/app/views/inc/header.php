@@ -11,3 +11,8 @@
     <link href='<?= URLROOT?>/css/style.css' rel="stylesheet" />
 </head>
 <body>
+<?php
+include APPROOT . '/views/inc/nav.php'; 
+include APPROOT . '/views/inc/notification.php'; 
+?>
+

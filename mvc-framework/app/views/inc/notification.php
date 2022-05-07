@@ -1,11 +1,8 @@
 <?php
-if (isset($data['flashMessage']) && isset($data['flashMessageClass'])) : ?>
+if (isset($data['flash_message']) && isset($data['flash_message_class'])) : ?>
 <div class="notification
- <?= $data['flashMessageClass'] ?>">
+ <?= $data['flash_message_class'] ?>">
   <button class="delete"></button>
-  <?= $data['flashMessage'] ?>
+  <?= $data['flash_message'] ?>
 </div>
 <?php endif; ?>
-<!-- is-primary
-is-danger
--->
