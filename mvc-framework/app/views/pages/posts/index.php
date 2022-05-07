@@ -1,5 +1,5 @@
 <?php require APPROOT . '/views/inc/header.php'; ?>
-<div class="container">
+<div class="container" style="min-height: 100vh;">
   <h1><?= $data['page_title']; ?></h1>
   <?php
   if (isset($data['usersPosts'])): ?>

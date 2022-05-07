@@ -6,7 +6,7 @@
   <h1 class="is-size-1">
     <?= $data['page_title'] ?>
   </h1>
-   <form method="POST" action="<?= URLROOT ?>/posts/store">
+   <form method="POST" action="<?= URLROOT ?>/posts/create">
    <!-- I think fields should be included as a partial or helper function -->
     <input type="number" value="<?= $data['user']->id?>" name="user_id" />
     <div class="field">
