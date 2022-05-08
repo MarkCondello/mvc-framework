@@ -10,4 +10,11 @@ class Post extends Model{
     return $this->db->rowCount();
   }
 
+  public function getPostById($id)
+  {
+    $this->db->query('SELECT * FROM posts WHERE id = :id LIMIT 1');
+    $this->db->bind('id', $id);
+    return $this->db->single();
+  }
+
 }

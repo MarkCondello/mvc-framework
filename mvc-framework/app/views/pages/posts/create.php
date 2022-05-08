@@ -1,14 +1,10 @@
 <?php require APPROOT . '/views/inc/header.php';?>
 <div class="container mt-6" style="min-height: 100vh;">
-<?php
-  // var_dump($data['user']);
-?>  
   <h1 class="is-size-1">
     <?= $data['page_title'] ?>
   </h1>
    <form method="POST" action="<?= URLROOT ?>/posts/create">
    <!-- I think fields should be included as a partial or helper function -->
-    <input type="number" value="<?= $data['user']->id?>" name="user_id" />
     <div class="field">
       <label class="label">Title</label>
       <div class="control has-icons-left has-icons-right">
@@ -40,9 +36,7 @@
           class="textarea <?= $data['body_error'] ? 'is-danger' : null ?>"
           name="body"
           rows="5"
-         >
-         <?= $data['body'] ?>
-        </textarea>
+         ><?= $data['body'] ?></textarea>
         <span class="icon is-small is-left">
           <i class="fas fa-pencil"></i>
         </span>
