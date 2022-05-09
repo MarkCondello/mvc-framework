@@ -3,7 +3,7 @@
   <h1 class="is-size-1">
     <?= $data['page_title'] ?>
   </h1>
-   <form method="POST" action="<?= URLROOT ?>/posts/create">
+   <form method="POST" action="<?= $data['action'] ?>">
    <!-- I think fields should be included as a partial or helper function -->
     <div class="field">
       <label class="label">Title</label>

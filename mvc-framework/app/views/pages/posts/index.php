@@ -10,13 +10,13 @@
   <a href="<?= URLROOT ?>/posts/create" class="button is-link">Create Another Post</a>
   <ul>
     <?php foreach($data['usersPosts'] as $post):?>
-      <li class="is-flex">
+      <li class="is-flex is-align-content-space-between	is-align-items-center">
         <div>
           <?= $post->title . ' - ' . $post->body . ' On: ' . $post->created_at ?>
         </div>
         <menu>
           <a href="<?= URLROOT ?>/posts/update/<?= $post->id ?>">Update post</a>
-          <form action="<?= URLROOT ?>/posts/delete/" method="POST">
+          <form action="<?= URLROOT ?>/posts/delete" method="POST">
             <input type="hidden" value="<?= $post->id ?>" name="post_id"/>
             <button>Delete post</button>
           </form>

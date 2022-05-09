@@ -39,62 +39,84 @@ class Posts extends Controller {
   }
   public function create()
   {
-    $user = $this->userModel->getUserByEmail($_SESSION['authed_user']);
+    $data = [
+      'page_title' => "Create a new post",
+      'action' => URLROOT . '/posts/create',
+    ];
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // die('Reached POST on create posts controller');
-      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-      $post = (object)[
-        'user_id' => $user->id,
-        'title' => $_POST['title'],
-        'body' => $_POST['body'],
-      ];
-      $data = [
-        'title' => $post->title ?? '',
-        'title_error' => $post->title ? '' : 'The title field is required.',
-        'body' => $post->body ?? '',
-        'body_error' => $post->body ? '' : 'The body field is required.',
-      ];
-      if (empty($data['title_error']) && empty($data['body_error'])) {
-        //Todo: add a second check for string lengths
-        if(strlen($post->title) < 4) {
-          $data['title_error'] = 'The title must be more than 4 characters.';
-        }
-        if(strlen($post->body) < 10) {
-          $data['body_error'] = 'The content must be more than 10 characters.';
-        }
-        if (empty($data['title_error']) && empty($data['body_error'])) {
-          $savedPost = $this->postModel->savePost($post);
-          if($savedPost) {
-            // Set success flashMessage
-            setFlashMessage($post->title . ' was created succesfully', 'is-success');
-            header('Location: ' . URLROOT . '/posts');
-          } 
-          else {
-            // ToDo: Test error flash message to session
-            setFlashMessage('There was an issue saving your post.', 'is-danger');
-            header('Location: ' . URLROOT . '/posts');
-          }
-        }
-      } 
-    } else {
-      $data = [
-        'page_title' => "Create a new post",
-      ];
+      $data = $this->processForm($data, 'save', 'was created succesfully');
     }
     $this->view("pages/posts/create", $data);
   }
  
-  //  ToDo Ron
   public function update($params)
   {
-
     $postData = $this->postModel->getPostById($params);
     $data = [
       'page_title' => 'Edit ' . $postData->title,
+      'action' => URLROOT . "/posts/update/$postData->id",
     ];
-    $data = array_merge($data, $postData);
-
-    // die('FROM UPDATE METHOD: '. var_dump($postData));
+    $data = array_merge($data, (array) $postData);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $data = $this->processForm($data, 'update', 'was updated succesfully', $postData->id);
+    }
     $this->view("pages/posts/create", $data);
+  }
+
+  private function processForm($data, $modelMethod, $successMessage = '', $postId = null)
+  {
+    $user = $this->userModel->getUserByEmail($_SESSION['authed_user']);
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $post = (object)[
+      'user_id' => $user->id,
+      'title' => $_POST['title'],
+      'body' => $_POST['body'],
+    ];
+    $formData = [
+      'title' => $post->title ?? '',
+      'title_error' => $post->title ? '' : 'The title field is required.',
+      'body' => $post->body ?? '',
+      'body_error' => $post->body ? '' : 'The body field is required.',
+    ];
+    if (empty($formData['title_error']) && empty($formData['body_error'])) {
+      if (strlen($post->title) < 5) {
+        $formData['title_error'] = 'The title must be more than 4 characters.';
+      }
+      if (strlen($post->body) < 11) {
+        $formData['body_error'] = 'The content must be more than 10 characters.';
+      }
+      if (empty($formData['title_error']) && empty($formData['body_error'])) {
+        $savedPost = null;
+        if ($modelMethod === 'save') {
+          $savedPost = $this->postModel->savePost($post);
+        } else if ($modelMethod === 'update') {
+          $savedPost = $this->postModel->updatePostById($post, $postId);
+        }
+        if ($savedPost) {
+          setFlashMessage($post->title . ' ' . $successMessage, 'is-success');
+          header('Location: ' . URLROOT . '/posts');
+        } 
+        else {
+          setFlashMessage('There was an issue saving your post.', 'is-danger');
+          header('Location: ' . URLROOT . '/posts');
+        }
+      }
+    }
+    return array_merge($formData, $data);
+  }
+
+  public function delete()
+  {
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $postId = $_POST['post_id'];
+    $post = $this->postModel->getPostById($postId);
+    $deletedPost = $this->postModel->deletePostById($postId);
+    if ($deletedPost) {
+      setFlashMessage($post->title . ' was succesfully deleted...', 'is-success');
+      header('Location: ' . URLROOT . '/posts');
+    } else {
+      setFlashMessage('There was an issue deleting your post.', 'is-danger');
+      header('Location: ' . URLROOT . '/posts');
+    }
   }
 }
